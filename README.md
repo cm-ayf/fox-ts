@@ -1,80 +1,73 @@
-# ts-node-template
+# かわいいきつねさん
 
-Template Repository for TypeScript + Node.js Application
+統合ゼミコミュニティ（[Twitter](https://twitter.com/tougousemi)）に住んでいるかわいいきつねさんです．
 
-## Setup
+# デプロイ
 
-```sh
-# リポジトリ作成時
-npm init -y
-# 以降
-npm i
-```
+Todo: HerokuへのTypeScriptデプロイ方法を確認する
 
-## Git Hooks
+# 機能
 
-以下のコマンドが`git commit`時に自動で実行される．
+## アクティビティ表示
 
-```sh
-npm run check  # 静的型チェック
-npm run format # コード整形
-```
+きつねさんはいつももっふもっふたいむです．
 
-以下のコマンドが`git push`時に自動で実行される．
-```sh
-npm test       # 単体テストチェック
-```
+## コマンド
 
-いずれかがエラーを吐くと`git commit/push`できないので注意．
+以下のスラッシュコマンドが使えます．
 
-## Scripts
+* `/fox`
+  * こやーん．
+* `/help`
+  * 使えるコマンドの一覧を表示します．
+* `/fortune`
+  * おみくじを引きます．
+* `/join [<vc>]`・`/leave`
+  * ボイスチャンネルに遊びに来ます．
+    * vcを指定した場合，そのvcに遊びに来ます．
+    * vcを指定しなかった場合，自分がvcにいればそこに遊びに来ます．いなければ諦めます．
+  * 今いるボイスチャンネルに新しい人が来たときに，お助けメッセージを表示します．
+* `/google <query> [<count>]`
+  * `query`文字列でググります．最初の`count`個（指定なしで3つ）のURLを返します．
+* `/url [<keyword> [<url>]]`
+  1. 引数を指定しない場合，URLリストを表示します．
+  2. keywordだけを指定した場合，該当するURLのリストを表示します．
+  3. keywordとurlを指定した場合，URLリストに追加します．
+  4. urlだけを指定するとエラーになります．
+* `/semi`
+  * `/semi search <query>`
+    * query文字列が含まれるゼミを検索します．
+  * `/semi all`
+    * ゼミテレポートチャンネルに誘導します．
+* `/quiz`
+  * `/quiz add <body> <answer>`
+    * bodyを内容として，クイズを追加します．
+  * `/quiz random`
+    * ランダムにクイズを出します．
 
-主に使うのは太字の2つ．
+## かわいい
 
-* `npm run build`
-  * `tsc`
-  * `src/**/*.ts`をもとに`dist/**/*.js`を生成する
-  * 本番環境用
-* `npm run check`
-  * `tsc --noEmit`
-  * `src/**/*.ts`の静的型エラーがないか確認する
-  * `dist/**/*.js`を生成しない
-  * `git commit`時の自動実行その1
-* `npm run dev`
-  * `ts-node src/index.ts`
-  * `dist/**/*.js`を生成せずに直接実行する
-* **`npm run dev:watch`**
-  * `ts-node-dev src/index.ts`
-  * `dist/**/*.js`を生成せずに直接実行する
-  * `src/**/*.ts`に変更があったときに自動で再起動する
-* `npm run lint-staged`
-  * `lint-staged`
-  * ワークスペース内のコード等を整形する
-  * `git commit`時の自動実行その2
-* `npm run prepare`
-  * `husky install`
-  * `npm install`時に自動実行される；それ以外では実行しなくてよい
-* `npm start`
-  * `node dist/index.js`
-  * コンパイルされた.jsを実行する
-  * 本番環境用
-* **`npm test`**
-  * `jest`
-  * `src/**/*.test.ts`にあるテストを実行する
-  * `git push`時の自動実行
+それっぽいことを言うと反応してくれます．
 
-# Deploy
+Todo: 動的に設定可能にする．
 
-* `docker-compose.yml`
-```yml
-services:
-  [name]:
-    env_file: ./[path].env
-    build: ./[path]
-```
-
-* `docker` command
-```sh
-docker build . -t [name]
-docker run -d [name]
-```
+* `きつね`など
+  * かわいく鳴いてくれます．
+* `:Otsu_desu:`など
+  * 労ってくれます．
+* `うおうお`など
+  * うおうおしてくれます．
+* `:sugoi:`など
+  * わかってくれます．
+* `こんにちは`
+  * あいさつしてくれます．
+* `こんばんは`
+  * あいさつしてくれます．
+* `つかれた`など
+  * 応援してくれます．
+* `:usagi:`など
+  * きつねであることを主張します．
+* `ごはん`など
+  * ご飯を食べます．
+* `きつねうどん`
+  * 人間を滅ぼすことを決意します．
