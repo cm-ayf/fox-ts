@@ -4,6 +4,25 @@
 
 # デプロイ
 
+## 手元で起動する
+
+```sh
+git clone <url>
+cd fox-ts
+npm i
+npm run dev
+```
+
+## Dockerで起動する
+
+```sh
+git clone <url>
+cd fox-ts
+docker build --name fox-ts .
+```
+
+## Herokuにデプロイする
+
 Todo: HerokuへのTypeScriptデプロイ方法を確認する
 
 # 機能
