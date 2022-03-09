@@ -1,6 +1,9 @@
 import { VoiceConnection } from '@discordjs/voice';
 import { Collection, Guild, GuildBasedChannel, VoiceState } from 'discord.js';
-import * as message from './message';
+import { env } from '../utils';
+import * as joinMessage from './message';
+import { handle } from './message';
+const { GUILD_ID } = env;
 
 export const connections = new Collection<string, VoiceConnection>();
 
@@ -22,10 +25,27 @@ async function onJoin(state: VoiceState) {
     state.channel?.name ?? ''
   );
 
-  await tc?.send({
+  const message = await tc?.send({
     content: `${state.member}`,
-    ...message,
+    ...joinMessage,
   });
+
+  message
+    ?.createMessageComponentCollector({
+      time: 60 * 1000,
+      max: 1,
+      filter: (i) => i.user.id === state.member?.user.id,
+    })
+    .on('end', () => {
+      message?.delete();
+    });
+
+  message
+    ?.createMessageComponentCollector({
+      time: 60 * 1000,
+      filter: (i) => i.user.id !== state.member?.user.id,
+    })
+    .on('collect', handle);
 }
 
 async function onExit(old: VoiceState) {
@@ -36,6 +56,7 @@ async function onExit(old: VoiceState) {
 
 export async function voiceStateUpdate(old: VoiceState, state: VoiceState) {
   try {
+    if (state.guild.id !== GUILD_ID) return;
     if (!old.channel && state.channel) await onJoin(state);
     if (old.channel && !state.channel) await onExit(old);
   } catch (e) {

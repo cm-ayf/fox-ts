@@ -8,10 +8,22 @@ export const components: (Required<BaseMessageComponentOptions> &
   MessageActionRowOptions)[] = [
   {
     type: 'ACTION_ROW',
-    components: [],
+    components: [
+      {
+        type: 'BUTTON',
+        style: 'PRIMARY',
+        customId: 'close',
+        label: 'わかった！',
+      },
+    ],
   },
 ];
 
-export function handle(interaction: MessageComponentInteraction<'cached'>) {
-  interaction.message.delete();
+export async function handle(
+  interaction: MessageComponentInteraction<'cached'>
+) {
+  await interaction.reply({
+    ephemeral: true,
+    content: '(^・ω・^)ノ こやーん（あなた違う人？）',
+  });
 }
