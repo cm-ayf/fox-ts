@@ -1,5 +1,5 @@
-import { CommandDefinition } from '.';
-import { helpMessageCreator } from '../messages';
+import { CommandDefinition } from '../commands';
+import { messageCreator } from './message';
 
 export function helpDefinitoinCreator(
   definitions: CommandDefinition[]
@@ -13,7 +13,7 @@ export function helpDefinitoinCreator(
     async handle(interaction) {
       await interaction.reply({
         ephemeral: true,
-        ...helpMessageCreator(definitions),
+        ...messageCreator(definitions),
       });
     },
   };

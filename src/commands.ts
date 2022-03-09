@@ -6,7 +6,7 @@ import type {
   GuildApplicationCommandManager,
 } from 'discord.js';
 import { Collection } from 'discord.js';
-import { getGuild } from '../utils';
+import { getGuild } from './utils';
 import * as fox from './fox';
 import { helpDefinitoinCreator } from './help';
 

@@ -6,7 +6,15 @@ export const env = readenv({
   GUILD_ID: {},
 });
 
-export function getGuild(base: Base | Client) {
-  const client = 'client' in base ? base.client : base;
-  return client.guilds.fetch(env.GUILD_ID);
+function getClient(base: Base | Client) {
+  return 'client' in base ? base.client : base;
+}
+
+export async function getGuild(base: Base | Client) {
+  return getClient(base).guilds.fetch(env.GUILD_ID);
+}
+
+export async function cacheGuildChannels(base: Base | Client) {
+  const guild = await getGuild(base);
+  await guild.channels.fetch();
 }

@@ -20,7 +20,7 @@ class ReplyManager {
   }
 }
 
-const replies = new ReplyManager([
+const manager = new ReplyManager([
   {
     keywords: ['きつね', '狐', 'こやん', 'こやーん', 'くやーん', 'こゃーん'],
     reply: '(^・ω・^)ノ こやーん',
@@ -78,4 +78,4 @@ const replies = new ReplyManager([
   },
 ]);
 
-export default replies;
+export default manager;

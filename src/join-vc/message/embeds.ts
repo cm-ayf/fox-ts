@@ -1,5 +1,5 @@
 import { MessageEmbedOptions } from 'discord.js';
-import { embed } from '../base';
+import { embed } from '../../base';
 
 export const embeds: MessageEmbedOptions[] = [
   {
