@@ -30,12 +30,17 @@ class CommandManager {
     });
   }
 
+  get #commandNames() {
+    return `/${[...this.#commandDefinitions.keys()].join(', /')}`;
+  }
+
   async register(client: Client<true>) {
     const guild = await getGuild(client);
     if (await this.#hasCommandChanged(guild.commands)) {
       const commands = await guild.commands.set(
         this.#commandDefinitions.map((d) => d.data)
       );
+
       await Promise.all(
         commands.map((command) => {
           const permissions = this.#commandDefinitions.get(
@@ -46,6 +51,10 @@ class CommandManager {
             : undefined;
         })
       );
+
+      console.log(`registered commands: ${this.#commandNames}`);
+    } else {
+      console.log(`commands already registered: ${this.#commandNames}`);
     }
   }
 

@@ -1,4 +1,4 @@
-import { sha256 } from 'crypto-hash';
+import crypto from 'crypto';
 import { Fortune } from '.';
 
 class FortuneManager {
@@ -12,8 +12,11 @@ class FortuneManager {
   }
 
   static async getHashRandomFromArray<T>(set: T[], id: string) {
-    const hash = await sha256(`${id} ${new Date().toDateString()}`);
-    return [...set][parseInt(hash.slice(0, 12), 16) % set.length];
+    const hash = crypto.createHash('sha256');
+    hash.update(id);
+    hash.update(new Date().toDateString());
+    const i = parseInt(hash.digest('hex').slice(0, 12), 16) % set.length;
+    return [...set][i];
   }
 
   constructor(ranks: string[], luckyItems: string[], keywords: string[]) {
