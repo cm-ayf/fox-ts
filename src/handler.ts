@@ -1,10 +1,21 @@
-import type { Client, Interaction, Message, VoiceState } from 'discord.js';
+import type {
+  Client,
+  Interaction,
+  Message,
+  TextChannel,
+  VoiceState,
+} from 'discord.js';
 import commands from './commands';
+import { joinVC } from './messages';
 import replies from './replies';
+import { getGuild } from './utils';
 
 export async function ready(client: Client<true>) {
   console.log(`logged in as ${client.user.tag}`);
-  await commands.register(client);
+  Promise.all([
+    commands.register(client),
+    getGuild(client).then((guild) => guild.channels.fetch()),
+  ]);
 }
 
 export async function interactionCreate(interaction: Interaction) {
@@ -25,6 +36,20 @@ export async function messageCreate(message: Message) {
   ).catch(console.error);
 }
 
-export function voiceStateUpdate(old: VoiceState, state: VoiceState) {
-  return;
+export async function voiceStateUpdate(old: VoiceState, state: VoiceState) {
+  try {
+    if (old.channel || !state.channel) return;
+
+    const tc = state.client.channels.cache.find(
+      (c): c is TextChannel =>
+        c.type === 'GUILD_TEXT' && c.name === state.channel?.name
+    );
+
+    await tc?.send({
+      content: `${state.member}`,
+      ...joinVC,
+    });
+  } catch (e) {
+    console.error(e);
+  }
 }
