@@ -8,6 +8,7 @@ import type {
 import { Collection } from 'discord.js';
 import { getGuild } from './utils';
 import * as fox from './fox';
+import * as fortune from './fortune';
 import { helpDefinitoinCreator } from './help';
 import { join, leave } from './vc';
 
@@ -67,5 +68,5 @@ class CommandManager {
   }
 }
 
-const commands = new CommandManager([fox, join, leave]);
+const commands = new CommandManager([fox, join, leave, fortune]);
 export default commands;
