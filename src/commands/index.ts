@@ -1,15 +1,17 @@
 import type {
-  ApplicationCommandData,
   ApplicationCommandPermissionData,
+  ChatInputApplicationCommandData,
   Client,
   CommandInteraction,
   GuildApplicationCommandManager,
 } from 'discord.js';
 import { Collection } from 'discord.js';
 import { getGuild } from '../utils';
+import * as fox from './fox';
+import { helpDefinitoinCreator } from './help';
 
-interface CommandDefinition {
-  data: ApplicationCommandData;
+export interface CommandDefinition {
+  data: ChatInputApplicationCommandData;
   permissions?: ApplicationCommandPermissionData[];
   handle(interaction: CommandInteraction<'cached'>): Promise<void>;
 }
@@ -17,7 +19,10 @@ interface CommandDefinition {
 class CommandManager {
   #commandDefinitions = new Collection<string, CommandDefinition>();
 
-  constructor(commandDefinitions: CommandDefinition[]) {
+  constructor(commandDefinitions: CommandDefinition[], help = true) {
+    if (help)
+      commandDefinitions.push(helpDefinitoinCreator(commandDefinitions));
+
     commandDefinitions.forEach((d) => {
       this.#commandDefinitions.set(d.data.name, d);
     });
@@ -61,5 +66,5 @@ class CommandManager {
   }
 }
 
-const commands = new CommandManager([]);
+const commands = new CommandManager([fox]);
 export default commands;
