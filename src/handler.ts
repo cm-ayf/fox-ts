@@ -1,5 +1,6 @@
 import type { Client, Interaction, Message, VoiceState } from 'discord.js';
 import commands from './commands';
+import replies from './replies';
 
 export async function ready(client: Client<true>) {
   console.log(`logged in as ${client.user.tag}`);
@@ -15,8 +16,13 @@ export async function interactionCreate(interaction: Interaction) {
   }
 }
 
-export function messageCreate(message: Message) {
-  return;
+export async function messageCreate(message: Message) {
+  if (message.author.bot) return;
+  await Promise.all(
+    replies
+      .getAll(message.cleanContent)
+      .map((reply) => message.channel.send(reply))
+  ).catch(console.error);
 }
 
 export function voiceStateUpdate(old: VoiceState, state: VoiceState) {
