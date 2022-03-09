@@ -17,4 +17,4 @@ export async function interactionCreate(interaction: Interaction) {
 }
 
 export { messageCreate } from './replies';
-export { voiceStateUpdate } from './join-vc';
+export { voiceStateUpdate } from './vc';

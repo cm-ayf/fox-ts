@@ -9,6 +9,7 @@ import { Collection } from 'discord.js';
 import { getGuild } from './utils';
 import * as fox from './fox';
 import { helpDefinitoinCreator } from './help';
+import { join, leave } from './vc';
 
 export interface CommandDefinition {
   data: ChatInputApplicationCommandData;
@@ -66,5 +67,5 @@ class CommandManager {
   }
 }
 
-const commands = new CommandManager([fox]);
+const commands = new CommandManager([fox, join, leave]);
 export default commands;
